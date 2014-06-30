@@ -2,7 +2,7 @@
 ## Bloccit: a Reddit clone to teach the fundamentals of web development and Rails 4
 
 Made with my mentor at [Bloc](http://bloc.io).
-
+User Authentication section is under config/application.yml
 
 Things you may want to cover:
 
