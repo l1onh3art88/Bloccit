@@ -1,8 +1,8 @@
-# -@user_like = Likes.new(current_user, @post)
-# -@user_like.like!
-# -@user_like.unlike!
-# -@user_like.liked_posts
-# -@user_like.liked_posts_count
+# @user_like = Likes.new(current_user, @post)
+# @user_like.like!
+# @user_like.unlike!
+# @user_like.liked_posts
+# @user_like.liked_posts_count
 # @user_like.post_user_likes
 
 class Likes
@@ -19,6 +19,7 @@ class Likes
       REDIS.sadd post_key, user.id
       REDIS.sadd user_key, post.id
     end
+    
     return true
   end
 
@@ -44,6 +45,10 @@ class Likes
 
   def post_likes_count
     REDIS.scard post_key
+  end
+
+  def user_liked_post?
+    REDIS.sismember post_key, user.id
   end
 
   protected

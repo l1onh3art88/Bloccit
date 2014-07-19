@@ -5,9 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :posts
   has_many :comments
-  has_many :votes, dependent: :destroy
+  has_many :likes, dependent: :destroy
   mount_uploader :avatar, AvatarUploader
   def role?(base_role)
   	role == base_role.to_s
   end
+  
 end

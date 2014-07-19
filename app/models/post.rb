@@ -2,8 +2,8 @@ class Post < ActiveRecord::Base
 	has_many :comments, dependent: :destroy
 	belongs_to :user
 	belongs_to :topic
-	has_many :votes, dependent: :destroy
-	after_create :create_vote
+	after_create :create_like
+  has_many :likes, dependent: :destroy
 	mount_uploader :image, ImageUploader
 
 	scope :newer_first, -> {order('rank DESC')}
@@ -12,18 +12,11 @@ class Post < ActiveRecord::Base
 	validates :body, length: {minimum: 20}, presence: true
 	validates :topic, presence: true
 	validates :user, presence: true
-
-	def up_votes
-		self.votes.where(value: 1).count
-	end
-
-	def down_votes
-		self.votes.where(value: -1).count
-	end
-
+	
 	def points
-    self.votes.sum(:value).to_i
-  	end
+		@likes = Likes.new(nil, self)
+    @likes.post_likes_count * 7
+	end
 
   	def update_rank
   		age = (self.created_at - Time.new(1970,1,1)) / 86400
@@ -31,10 +24,25 @@ class Post < ActiveRecord::Base
 
   		self.update_attribute(:rank, new_rank)
   	end
+    
 
+    def create_like(liker)
+      @post = Likes.new(liker, self)
+      @post.like!
+    end
+    def count_likes
+      @likes = Likes.new(nil, self)
+      @likes.post_likes_count
+    end
+
+    def unlike(liker)
+      @post = Likes.new(liker, self)
+      @post.unlike!
+    end
+    
   	private
 
-  	def create_vote
-  		user.votes.create(value: 1, post: self)
-  	end
+    def update_post
+    self.post.update_rank
+    end
 end
