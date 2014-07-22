@@ -2,7 +2,7 @@ class Post < ActiveRecord::Base
 	has_many :comments, dependent: :destroy
 	belongs_to :user
 	belongs_to :topic
-	after_create :create_like
+	#after_create :create_like
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
 	mount_uploader :image, ImageUploader
@@ -12,7 +12,7 @@ class Post < ActiveRecord::Base
 	validates :title, length: {minimum: 5}, presence: true
 	validates :body, length: {minimum: 20}, presence: true
 	validates :topic, presence: true
-	validates :user, presence: true
+	#validates :user, presence: true
 	
 	def points
 		@likes = Likes.new(nil, self)
