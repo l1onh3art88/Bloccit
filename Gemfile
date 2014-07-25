@@ -56,7 +56,10 @@ gem 'will_paginate'
 group :test do
 	gem 'rspec-rails'
 	gem 'capybara'
+	gem 'autotest-rails'
+	gem 'ZenTest', "4.0.0"
 end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
