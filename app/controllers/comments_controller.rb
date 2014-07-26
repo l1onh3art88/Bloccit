@@ -11,12 +11,14 @@ class CommentsController < ApplicationController
 
 		authorize @comment
 		if @comment.save
-			redirect_to [@topic, @post], notice: "Comment was saved successfully."
+			flash[:notice] = "Comment was saved successfully."
     	else
       		flash[:error] = @comment.errors.full_messages.join(', ') 
-      		redirect_to :back
     	end
 
+    	respond_with(@comment) do |format|
+    		format.html {redirect_to [@post.topic, @post]}
+    	end
 	end
 
 	def destroy
