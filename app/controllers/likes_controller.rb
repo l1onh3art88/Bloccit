@@ -16,8 +16,8 @@ class LikesController < ApplicationController
 	private
 
 	def setup
-		@topic = Topic.find(params[:topic_id])
-		@post = @topic.posts.find(params[:post_id])
+		
+		@post = Post.find(params[:post_id])
 		@like_manager = Likes.new(current_user, @post)
 	end
 

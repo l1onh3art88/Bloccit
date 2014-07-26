@@ -4,7 +4,8 @@ Bloccit::Application.routes.draw do
   resources :users, only: [:update, :show, :index]
 
   resources :topics do
-    resources :posts, except: [:index], controller: 'topics/posts' 
+    resources :posts, except: [:index], controller: 'topics/posts'  
+     
   end
   resources :posts, only: [:index] do
     resources :comments, only: [:create, :destroy]
