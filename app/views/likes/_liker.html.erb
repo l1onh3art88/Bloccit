@@ -1,6 +1,6 @@
 
 <div class= "vote-arrows pull-left">
-	<% if Likes.new(current_user, post).user_liked_post? %>
+	<% if current_user && Likes.new(current_user, post).user_liked_post? %>
 		<div><%= link_to " ", post_like_path( post, post.id), method: :delete, class: 'glyphicon glyphicon-thumbs-down' %></div>
 	<% else %>
   		<div><%= link_to " ", post_likes_path( post), method: :post, class: 'glyphicon glyphicon-thumbs-up' %></div>
